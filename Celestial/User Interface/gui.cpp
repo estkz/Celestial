@@ -43,10 +43,17 @@ long __stdcall WindowProcess(HWND window, UINT message, WPARAM wideParameter, LP
 			const auto points = MAKEPOINTS(longParameter);
 			auto rect = ::RECT{ };
 
-			// Expand here
-		}
-	}
+			GetWindowRect(gui::window, &rect);
 
+			rect.left += points.x - gui::position.x;
+			rect.top += points.y - gui::position.y;
+
+			if (gui::position.x >= 0 && gui::position.x <= gui::WIDTH && gui::position.y >= 0 && gui::position.y <= 19) {
+				SetWindowPos(gui::window, HWND_TOPMOST, rect.left, rect.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
+			}
+		}return 0;
+	}
+		return DefWindowProcW(window, message, wideParameter, longParameter);
 	}
 	}
 }
