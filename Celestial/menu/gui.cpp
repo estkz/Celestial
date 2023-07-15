@@ -256,7 +256,22 @@ void gui::Render() noexcept
 
 	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
+	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 7.0f, ImGui::GetContentRegionAvail().y));
 
+	// Left Panel
+	/* TODO: Center Buttons, change button style & make wireframes for menu design */
+	ImGui::Button("Aimbot", ImVec2(100, 100));
+	ImGui::Button("Visuals", ImVec2(100, 100));
+	ImGui::Button("Misc", ImVec2(100, 100));
+	ImGui::Button("Config", ImVec2(100, 100));
+	ImGui::EndChild();
+
+	// Add the blue seperator line
+	ImGui::SameLine();
+	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(1, 191, 253, 255).Value);
+	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+	ImGui::PopStyleColor();
+	ImGui::SameLine();
 
 
 
