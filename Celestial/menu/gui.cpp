@@ -15,7 +15,6 @@
 // Miscellaneous Related Includes
 #include <vector>
 #include <string>
-#include <windows.h>
 
 // Here I store the width and height of our mnonitor in screenWidth and screenHeight
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
