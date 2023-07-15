@@ -18,11 +18,6 @@
 
 int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
 {
-	// TODO:
-	// Create The Graphical User Interface
-	// Create while isOpened loop
-	// Destroy imgui/Device/HWindow to avoid memory leaks
-
 	gui::CreateHWindow("Celestial");
 	gui::CreateDevice();
 	gui::CreateImGui();

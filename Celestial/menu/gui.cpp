@@ -15,6 +15,15 @@
 // Miscellaneous Related Includes
 #include <vector>
 #include <string>
+#include <windows.h>
+
+// Here I store the width and height of our mnonitor in screenWidth and screenHeight
+int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+// To center the menu on the screen, we subtract the width and height of our monitor with the width and height of our menu. We then divide both with 2 and store windowX and windowY
+int windowX = (screenWidth - gui::WIDTH) / 2;
+int windowY = (screenHeight - gui::HEIGHT) / 2;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND window,
@@ -34,8 +43,6 @@ long __stdcall WindowProcess(
 
 		switch (message)
 		{
-
-
 		case WM_SIZE: 
 		{
 			if (gui::device && wideParameter != SIZE_MINIMIZED)
@@ -105,7 +112,7 @@ void gui::CreateHWindow(const char* windowName) noexcept
 
 	RegisterClassEx(&windowClass);
 
-	window = CreateWindowExA(0, "Celestial", windowName, WS_POPUP, 100, 100, WIDTH, HEIGHT, 0, 0, windowClass.hInstance, 0);
+	window = CreateWindowExA(0, "Celestial", windowName, WS_POPUP, windowX, windowY, WIDTH, HEIGHT, 0, 0, windowClass.hInstance, 0);
 
 	ShowWindow(window, SW_SHOWDEFAULT);
 	UpdateWindow(window);
@@ -212,9 +219,24 @@ void gui::Render() noexcept
 {
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
-	ImGui::Begin("Celestial", &isOpened, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove );
+	ImGui::Begin(
+		"Celestial",
+		&isOpened, 
+		ImGuiWindowFlags_NoResize | 
+		ImGuiWindowFlags_NoSavedSettings | 
+		ImGuiWindowFlags_NoCollapse | 
+		ImGuiWindowFlags_NoMove | 
+		ImGuiWindowFlags_NoTitleBar | 
+		ImGuiWindowFlags_NoScrollbar
+	);
+
+	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
 
+
+
+
+	//  This marks the end of the menu section. Please ensure that the menu code is placed above this comment!
 	ImGui::End();
 }
 
