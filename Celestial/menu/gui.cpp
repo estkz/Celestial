@@ -82,11 +82,7 @@ long __stdcall WindowProcess(
 
 				rect.left += points.x - gui::position.x;
 				rect.top += points.y - gui::position.y;
-
-				if (gui::position.x >= 0 &&
-					gui::position.x <= gui::WIDTH &&
-					gui::position.y >= 0 && gui::position.y <= 19)
-					SetWindowPos(gui::window, HWND_TOPMOST, rect.left, rect.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
+				SetWindowPos(gui::window, HWND_TOPMOST, rect.left, rect.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
 			}
 		} return 0;
 
@@ -193,22 +189,6 @@ void gui::CreateImGui() noexcept
 	// Menu - Color Theme Config
 	colors[ImGuiCol_WindowBg] = ImColor(24, 24, 24); // Frame Backcolor
 
-	colors[ImGuiCol_ResizeGrip] = ImColor(0, 0, 0, 0);
-	colors[ImGuiCol_ResizeGripActive] = ImColor(0, 0, 0, 0);
-	colors[ImGuiCol_ResizeGripHovered] = ImColor(0, 0, 0, 0);
-
-	colors[ImGuiCol_Button] = ImColor(18, 18, 18, 100);
-	colors[ImGuiCol_ButtonActive] = ImColor(21, 21, 21, 100);
-	colors[ImGuiCol_ButtonHovered] = ImColor(21, 21, 21, 100);
-
-	colors[ImGuiCol_CheckMark] = ImColor(1, 191, 253, 255);
-
-	colors[ImGuiCol_FrameBg] = ImColor(24, 24, 24);
-	colors[ImGuiCol_FrameBgActive] = ImColor(26, 26, 26);
-	colors[ImGuiCol_FrameBg] = ImColor(26, 26, 26);
-
-	//colors[ImGuiCol_PopupBg] = ImColor(1, 191, 253, 255);
-	colors[ImGuiCol_HeaderHovered] = ImColor(1, 191, 253, 255);
 }
 
 void gui::DestroyImGui() noexcept
