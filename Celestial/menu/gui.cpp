@@ -1,7 +1,6 @@
 // Menu Related Includes
 #include "../menu/gui.h"
 
-#include "data/font_awesome.h"
 
 
 #include "../imgui/imgui_impl_dx9.h"
@@ -201,7 +200,7 @@ void gui::CreateImGui() noexcept
 	icons_config.OversampleH = 3;
 	icons_config.OversampleV = 3;
 
-	icons_font = io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.5f, &icons_config, icon_ranges);
+	//icons_font = io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.5f, &icons_config, icon_ranges);
 
 	// Menu - Color Theme Config
 	colors[ImGuiCol_WindowBg] = ImColor(20, 20, 20); // Frame Backcolor
@@ -333,7 +332,7 @@ void gui::Render() noexcept
 	);
 
 	// Create buttons of tabs
-	CenterButtons({ ICON_FA_MAP_PIN"  Local", ICON_FA_GLOBE"  Enemies", ICON_FA_FOLDER"  Misc", ICON_FA_USER"  Player Info" }, { 0, 1, 2, 3 }, tabIndex);
+	
 
 	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
