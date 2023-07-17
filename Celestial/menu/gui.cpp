@@ -1,6 +1,9 @@
 // Menu Related Includes
 #include "../menu/gui.h"
 
+#include "data/font_awesome.h"
+
+
 #include "../imgui/imgui_impl_dx9.h"
 #include "../imgui/imgui_impl_win32.h"
 #include "../imgui/imgui_internal.h"
@@ -15,6 +18,7 @@
 // Miscellaneous Related Includes
 #include <vector>
 #include <string>
+
 
 // Here I store the width and height of our mnonitor in screenWidth and screenHeight
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -168,12 +172,14 @@ void gui::DestroyDevice() noexcept
 	}
 }
 
+// Used for loading icons
+inline ImFont* icons_font = nullptr;
+
 void gui::CreateImGui() noexcept
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO io = ::ImGui::GetIO();
-
 	ImGuiStyle& style = ImGui::GetStyle();
 	auto& colors = style.Colors;
 
@@ -186,8 +192,20 @@ void gui::CreateImGui() noexcept
 
 
 
+	// Icons In Menu
+	static const ImWchar icon_ranges[]{ 0xf000, 0xf3ff, 0 };
+	ImFontConfig icons_config;
+
+	icons_config.MergeMode = true;
+	icons_config.PixelSnapH = true;
+	icons_config.OversampleH = 3;
+	icons_config.OversampleV = 3;
+
+	icons_font = io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.5f, &icons_config, icon_ranges);
+
 	// Menu - Color Theme Config
-	colors[ImGuiCol_WindowBg] = ImColor(24, 24, 24); // Frame Backcolor
+	colors[ImGuiCol_WindowBg] = ImColor(20, 20, 20); // Frame Backcolor
+	colors[ImGuiCol_ChildBg] = ImColor(24, 24, 24); // Childform Backcolor
 
 }
 
@@ -219,46 +237,6 @@ void gui::BeginRender() noexcept
 	ImGui::NewFrame();
 }
 
-void gui::Render() noexcept
-{
-	ImGui::SetNextWindowPos({ 0, 0 });
-	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
-	ImGui::Begin(
-		"Celestial",
-		&isOpened, 
-		ImGuiWindowFlags_NoResize | 
-		ImGuiWindowFlags_NoSavedSettings | 
-		ImGuiWindowFlags_NoCollapse | 
-		ImGuiWindowFlags_NoMove | 
-		ImGuiWindowFlags_NoTitleBar | 
-		ImGuiWindowFlags_NoScrollbar
-	);
-
-	// This is the start of the menu. Feel free to add checkboxes and other components below!
-
-	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 7.0f, ImGui::GetContentRegionAvail().y));
-
-	// Left Panel
-	/* TODO: Center Buttons, change button style & make wireframes for menu design */
-	ImGui::Button("Aimbot", ImVec2(100, 100));
-	ImGui::Button("Visuals", ImVec2(100, 100));
-	ImGui::Button("Misc", ImVec2(100, 100));
-	ImGui::Button("Config", ImVec2(100, 100));
-	ImGui::EndChild();
-
-	// Add the blue seperator line
-	ImGui::SameLine();
-	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(1, 191, 253, 255).Value);
-	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
-	ImGui::PopStyleColor();
-	ImGui::SameLine();
-
-
-
-	//  This marks the end of the menu section. Please ensure that the menu code is placed above this comment!
-	ImGui::End();
-}
-
 void gui::EndRender() noexcept
 {
 	ImGui::EndFrame();
@@ -281,4 +259,103 @@ void gui::EndRender() noexcept
 	// handle loss of D3D9 device
 	if (result == D3DERR_DEVICELOST && device->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
 		ResetDevice();
+}
+
+/*
+	[+] ---------- Styling ---------- [+]
+
+		    • Component Styling
+		    • Render Function
+
+	[+] ----------------------------- [+]
+*/
+
+inline void CenterButtons(std::vector<std::string> names, std::vector<int> indexes, int& selected_index) {
+	std::vector<ImVec2> sizes = {};
+	float total_area = 0.0f;
+
+	const auto& style = ImGui::GetStyle();
+
+	for (std::string& name : names) {
+		const ImVec2 label_size = ImGui::CalcTextSize(name.c_str(), 0, true);
+		ImVec2 size = ImGui::CalcItemSize(ImVec2(), label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
+
+		size.x += 45.5f;
+		size.y += 15.f;
+
+		sizes.push_back(size);
+		total_area += size.x;
+	}
+
+	ImGui::SameLine((ImGui::GetContentRegionAvail().x / 2) - (total_area / 2));
+
+	for (uint32_t i = 0; i < names.size(); i++) {
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 70);
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+
+		if (selected_index == indexes[i]) {
+			ImGui::PushStyleColor(ImGuiCol_Button, ImColor(1, 191, 253, 255).Value);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor(1, 191, 253, 255).Value);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor(1, 191, 253, 255).Value);
+
+			if (ImGui::Button(names[i].c_str(), sizes[i]))
+				selected_index = indexes[i];
+			ImGui::PopStyleColor(3);
+		}
+		else {
+			if (ImGui::Button(names[i].c_str(), sizes[i]))
+				selected_index = indexes[i];
+		}
+
+		ImGui::PopStyleVar();
+
+		if (i != (names.size() - 1))
+			ImGui::SameLine();
+	}
+}
+
+void gui::Render() noexcept
+{
+	// Cheat Tabs
+	static int tabIndex = 0;
+
+	ImGui::SetNextWindowPos({ 0, 0 });
+	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
+	ImGui::Begin(
+		"Celestial",
+		&isOpened,
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoScrollbar
+	);
+
+	// Create buttons of tabs
+	CenterButtons({ ICON_FA_MAP_PIN"  Local", ICON_FA_GLOBE"  Enemies", ICON_FA_FOLDER"  Misc", ICON_FA_USER"  Player Info" }, { 0, 1, 2, 3 }, tabIndex);
+
+	// This is the start of the menu. Feel free to add checkboxes and other components below!
+
+	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 3.8f, ImGui::GetContentRegionAvail().y));
+
+	// Left Panel
+	/* TODO: Center Buttons, change button style & make wireframes for menu design */
+	
+	ImGui::EndChild();
+
+	// Add the blue seperator line
+	ImGui::SameLine();
+	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(117, 183, 69, 255).Value);
+	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+	ImGui::PopStyleColor();
+	ImGui::SameLine();
+
+	ImGui::BeginChild("##cheat_panel", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y));
+	ImGui::EndChild();
+
+
+
+	//  This marks the end of the menu section. Please ensure that the menu code is placed above this comment!
+	ImGui::End();
 }
