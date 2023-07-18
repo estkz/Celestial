@@ -1136,7 +1136,7 @@ bool ImGui::Checkbox(const char* label, bool* v)
     // Render a white checkmark when the checkbox is checked
     if (*v)
     {
-        ImU32 check_color = GetColorU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f)); // White color for the checkmark
+        ImU32 check_color = GetColorU32(ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); // Black color for the checkmark
         const float pad = ImMax(1.0f, IM_FLOOR(square_sz / 6.0f));
         RenderCheckMark(window->DrawList, check_bb.Min + ImVec2(pad, pad), check_color, square_sz - pad * 2.0f);
     }

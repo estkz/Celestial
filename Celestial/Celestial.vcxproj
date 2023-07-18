@@ -146,6 +146,7 @@
     <ClInclude Include="memory\memory.h" />
     <ClInclude Include="menu\data\components.h" />
     <ClInclude Include="menu\data\font_awesome.h" />
+    <ClInclude Include="menu\data\logo.h" />
     <ClInclude Include="menu\gui.h" />
   </ItemGroup>
   <ItemGroup>

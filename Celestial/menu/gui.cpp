@@ -5,6 +5,7 @@
 #include "data/font_awesome.cpp"
 #include "data/font_awesome.h"
 #include "data/components.h"
+#include "data/logo.h"
 
 #include "../imgui/imgui_impl_dx9.h"
 #include "../imgui/imgui_impl_win32.h"
@@ -29,6 +30,9 @@ int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 // To center the menu on the screen, we subtract the width and height of our monitor with the width and height of our menu. We then divide both with 2 and store windowX and windowY
 int windowX = (screenWidth - gui::WIDTH) / 2;
 int windowY = (screenHeight - gui::HEIGHT) / 2;
+
+IDirect3DTexture9* celestialLogo = nullptr;
+bool single_render = true;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND window,
@@ -214,7 +218,6 @@ void gui::CreateImGui() noexcept
 	colors[ImGuiCol_ButtonHovered] = ImColor(24, 24, 24); // Hover Color
 
 		// Checkbox
-	colors[ImGuiCol_CheckMark] = ImColor(117, 183, 69); // Checkmark Color
 	colors[ImGuiCol_FrameBg] = ImColor(50, 50, 50); // Checkbox Inside Color
 	colors[ImGuiCol_FrameBgHovered] = ImColor(50, 50, 50); // Checkbox Inside Hover Color
 	colors[ImGuiCol_FrameBgActive] = ImColor(117, 183, 69); // Checked Color
@@ -301,9 +304,12 @@ inline void CustomCheckbox(const char* format, bool* value) {
 
 void gui::Render() noexcept
 {
+	// Logo Size
+	ImVec2 logo_size(140, 60);
+
 	// Cheat Tabs
 	static int selectedTabIndex = 0;
-	static const char* tabs[] = { ICON_FA_CROSSHAIRS "  Aim", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" };
+	static const char* tabs[] = { ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" };
 
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
@@ -318,14 +324,25 @@ void gui::Render() noexcept
 		ImGuiWindowFlags_NoScrollbar
 	);
 
+	if (single_render)
+	{
+		D3DXCreateTextureFromFileInMemoryEx(gui::device, &logo_celestial, sizeof(logo_celestial), 140, 50, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &celestialLogo);
+		single_render = false;
+	}
+
 	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
 	ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f); // Set the child panel rounding
 
 	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 3.8f, ImGui::GetContentRegionAvail().y));
 
+	ImGui::Image(celestialLogo, logo_size);
+
+	// Add the grey separator line
+	ImGui::Separator();
+
 	// Add some empty space to make buttons appear a bit lower
-	ImGui::Dummy(ImVec2(0, 10));
+	ImGui::Dummy(ImVec2(0, 17));
 
 	// Adjust the button height here (default height is 0, which means auto-sizing)
 	ImVec2 buttonSize = ImVec2(-1, 30); // Set the height to 30 pixels
