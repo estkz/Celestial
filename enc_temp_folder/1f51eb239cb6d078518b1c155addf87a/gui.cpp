@@ -351,7 +351,9 @@ void gui::Render() noexcept
 	// Render the appropriate content for the selected tab
 	if (selectedTabIndex == 0) // Aim Tab
 	{
+		
 		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
+		
 	}
 	else if (selectedTabIndex == 1) // Visual Tab
 	{
