@@ -320,7 +320,12 @@ void gui::Render() noexcept
 
 	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
+	ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f); // Set the child panel rounding
+
 	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 3.8f, ImGui::GetContentRegionAvail().y));
+
+	// Add some empty space to make buttons appear a bit lower
+	ImGui::Dummy(ImVec2(0, 10));
 
 	// Adjust the button height here (default height is 0, which means auto-sizing)
 	ImVec2 buttonSize = ImVec2(-1, 30); // Set the height to 30 pixels
@@ -339,6 +344,8 @@ void gui::Render() noexcept
 
 	ImGui::EndChild();
 
+	ImGui::PopStyleVar(); // Restore the original style
+
 	// Add the blue separator line
 	ImGui::SameLine();
 	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(117, 183, 69).Value);
@@ -346,7 +353,12 @@ void gui::Render() noexcept
 	ImGui::PopStyleColor();
 	ImGui::SameLine();
 
+	ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f); // Set the cheat panel rounding
+
 	ImGui::BeginChild("##cheat_panel", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y));
+
+	// Set the starting position for rendering components within the child window
+	ImGui::SetCursorPos(ImVec2(10, 10)); // X=10, Y=10 (adjust as needed)
 
 	// Render the appropriate content for the selected tab
 	if (selectedTabIndex == 0) // Aim Tab
@@ -367,6 +379,8 @@ void gui::Render() noexcept
 	}
 
 	ImGui::EndChild();
+
+	ImGui::PopStyleVar(); // Restore the original style
 
 	//  This marks the end of the menu section. Please ensure that the menu code is placed above this comment!
 	ImGui::End();
