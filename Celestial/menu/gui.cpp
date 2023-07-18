@@ -1,7 +1,10 @@
 // Menu Related Includes
+
 #include "../menu/gui.h"
 
-
+#include "data/font_awesome.cpp"
+#include "data/font_awesome.h"
+#include "data/components.h"
 
 #include "../imgui/imgui_impl_dx9.h"
 #include "../imgui/imgui_impl_win32.h"
@@ -14,10 +17,10 @@
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+
 // Miscellaneous Related Includes
 #include <vector>
 #include <string>
-
 
 // Here I store the width and height of our mnonitor in screenWidth and screenHeight
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -178,18 +181,17 @@ void gui::CreateImGui() noexcept
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO io = ::ImGui::GetIO();
+	ImGuiIO& io = ::ImGui::GetIO();
 	ImGuiStyle& style = ImGui::GetStyle();
 	auto& colors = style.Colors;
 
 	io.IniFilename = NULL;
 
 	ImGui::StyleColorsDark();
-
 	ImGui_ImplWin32_Init(window);
 	ImGui_ImplDX9_Init(device);
 
-
+	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Verdana.ttf", 14.0f);
 
 	// Icons In Menu
 	static const ImWchar icon_ranges[]{ 0xf000, 0xf3ff, 0 };
@@ -200,11 +202,22 @@ void gui::CreateImGui() noexcept
 	icons_config.OversampleH = 3;
 	icons_config.OversampleV = 3;
 
-	//icons_font = io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.5f, &icons_config, icon_ranges);
+	icons_font = io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 13.0f, &icons_config, icon_ranges);
 
 	// Menu - Color Theme Config
 	colors[ImGuiCol_WindowBg] = ImColor(20, 20, 20); // Frame Backcolor
 	colors[ImGuiCol_ChildBg] = ImColor(24, 24, 24); // Childform Backcolor
+
+		// Button
+	colors[ImGuiCol_Button] = ImColor(24, 24, 24); // Button Backcolor
+	colors[ImGuiCol_ButtonActive] = ImColor(34, 34, 34); // Button Active
+	colors[ImGuiCol_ButtonHovered] = ImColor(24, 24, 24); // Hover Color
+
+		// Checkbox
+	colors[ImGuiCol_CheckMark] = ImColor(117, 183, 69); // Checkmark Color
+	colors[ImGuiCol_FrameBg] = ImColor(50, 50, 50); // Checkbox Inside Color
+	colors[ImGuiCol_FrameBgHovered] = ImColor(50, 50, 50); // Checkbox Inside Hover Color
+	colors[ImGuiCol_FrameBgActive] = ImColor(117, 183, 69); // Checked Color
 
 }
 
@@ -269,54 +282,28 @@ void gui::EndRender() noexcept
 	[+] ----------------------------- [+]
 */
 
-inline void CenterButtons(std::vector<std::string> names, std::vector<int> indexes, int& selected_index) {
-	std::vector<ImVec2> sizes = {};
-	float total_area = 0.0f;
+inline void CustomCheckbox(const char* format, bool* value) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ImVec4 colorFrameBg = style.Colors[ImGuiCol_FrameBg];
 
-	const auto& style = ImGui::GetStyle();
-
-	for (std::string& name : names) {
-		const ImVec2 label_size = ImGui::CalcTextSize(name.c_str(), 0, true);
-		ImVec2 size = ImGui::CalcItemSize(ImVec2(), label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
-
-		size.x += 45.5f;
-		size.y += 15.f;
-
-		sizes.push_back(size);
-		total_area += size.x;
+	// If the checkbox is checked (true), change the color of the space inside the checkbox to green
+	if (*value) {
+		style.Colors[ImGuiCol_FrameBg] = ImVec4(117 / 255.0f, 183 / 255.0f, 69 / 255.0f, 1.0f);
 	}
 
-	ImGui::SameLine((ImGui::GetContentRegionAvail().x / 2) - (total_area / 2));
+	ImGui::Checkbox(format, value);
 
-	for (uint32_t i = 0; i < names.size(); i++) {
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 70);
-		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+	// Restore the original color after rendering the checkbox
+	style.Colors[ImGuiCol_FrameBg] = colorFrameBg;
 
-		if (selected_index == indexes[i]) {
-			ImGui::PushStyleColor(ImGuiCol_Button, ImColor(1, 191, 253, 255).Value);
-			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor(1, 191, 253, 255).Value);
-			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor(1, 191, 253, 255).Value);
-
-			if (ImGui::Button(names[i].c_str(), sizes[i]))
-				selected_index = indexes[i];
-			ImGui::PopStyleColor(3);
-		}
-		else {
-			if (ImGui::Button(names[i].c_str(), sizes[i]))
-				selected_index = indexes[i];
-		}
-
-		ImGui::PopStyleVar();
-
-		if (i != (names.size() - 1))
-			ImGui::SameLine();
-	}
+	ImGui::Dummy(ImVec2());
 }
 
 void gui::Render() noexcept
 {
 	// Cheat Tabs
-	static int tabIndex = 0;
+	static int selectedTabIndex = 0;
+	static const char* tabs[] = { ICON_FA_CROSSHAIRS "  Aim", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" };
 
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
@@ -331,29 +318,57 @@ void gui::Render() noexcept
 		ImGuiWindowFlags_NoScrollbar
 	);
 
-	// Create buttons of tabs
-	
-
 	// This is the start of the menu. Feel free to add checkboxes and other components below!
 
 	ImGui::BeginChild("##selection_panel", ImVec2(ImGui::GetContentRegionAvail().x / 3.8f, ImGui::GetContentRegionAvail().y));
 
-	// Left Panel
-	/* TODO: Center Buttons, change button style & make wireframes for menu design */
-	
+	// Adjust the button height here (default height is 0, which means auto-sizing)
+	ImVec2 buttonSize = ImVec2(-1, 30); // Set the height to 30 pixels
+
+	ImColor unselectedColor(24, 24, 24); // RGB values (0-255) converted to ImColor
+	ImColor selectedColor(34, 34, 34);   // RGB values (0-255) converted to ImColor
+
+	for (int i = 0; i < sizeof(tabs) / sizeof(tabs[0]); ++i) {
+		ImVec4 buttonColor = (selectedTabIndex == i) ? selectedColor : unselectedColor;
+		ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+		if (ImGui::Button(tabs[i], buttonSize)) {
+			selectedTabIndex = i;
+		}
+		ImGui::PopStyleColor();
+	}
+
 	ImGui::EndChild();
 
-	// Add the blue seperator line
+	// Add the blue separator line
 	ImGui::SameLine();
-	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(117, 183, 69, 255).Value);
+	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(117, 183, 69).Value);
 	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 	ImGui::PopStyleColor();
 	ImGui::SameLine();
 
 	ImGui::BeginChild("##cheat_panel", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y));
+
+	// Render the appropriate content for the selected tab
+	if (selectedTabIndex == 0) // Aim Tab
+	{
+		
+		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
+		
+	}
+	else if (selectedTabIndex == 1) // Visual Tab
+	{
+		CustomCheckbox(" ESP", &cbox::enableESP);
+	}
+	else if (selectedTabIndex == 2) // Misc Tab
+	{
+		CustomCheckbox(" Bunnyhop", &cbox::enableBhop);
+	}
+	else if (selectedTabIndex == 3) // Config Tab
+	{
+		CustomCheckbox(" Config", &cbox::cbConfig);
+	}
+
 	ImGui::EndChild();
-
-
 
 	//  This marks the end of the menu section. Please ensure that the menu code is placed above this comment!
 	ImGui::End();

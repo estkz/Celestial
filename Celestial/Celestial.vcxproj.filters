@@ -48,6 +48,9 @@
     <ClInclude Include="menu\data\font_awesome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="menu\data\components.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="menu\gui.cpp">
