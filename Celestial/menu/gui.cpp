@@ -326,7 +326,7 @@ void gui::Render() noexcept
 
 	if (single_render)
 	{
-		D3DXCreateTextureFromFileInMemoryEx(gui::device, &logo_celestial, sizeof(logo_celestial), 140, 50, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &celestialLogo);
+		D3DXCreateTextureFromFileInMemoryEx(gui::device, &logo_celestial, sizeof(logo_celestial), 350, 500, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &celestialLogo);
 		single_render = false;
 	}
 
@@ -381,10 +381,20 @@ void gui::Render() noexcept
 	if (selectedTabIndex == 0) // Aim Tab
 	{
 		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
+		ImGui::SetCursorPos(ImVec2(10, 40)); // X=10, Y=10 (adjust as needed)
+		CustomCheckbox(" No Recoil", &cbox::enableRecoil);
+		ImGui::SetCursorPos(ImVec2(10, 70)); // X=10, Y=10 (adjust as needed)
+		CustomCheckbox(" Triggerbot", &cbox::enableTriggerbot);
 	}
 	else if (selectedTabIndex == 1) // Visual Tab
 	{
 		CustomCheckbox(" ESP", &cbox::enableESP);
+		CustomCheckbox(" Force Team", &cbox::enableTeamESP);
+		CustomCheckbox(" Health", &cbox::enableHealthESP);
+		CustomCheckbox(" Name", &cbox::enableNameESP);
+		CustomCheckbox(" Snaplines", &cbox::enableSnaplines);
+		CustomCheckbox(" Armor", &cbox::enableArmorESP);
+		CustomCheckbox(" Fullbright", &cbox::enableFullbright);
 	}
 	else if (selectedTabIndex == 2) // Misc Tab
 	{
