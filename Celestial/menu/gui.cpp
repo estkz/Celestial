@@ -363,7 +363,7 @@ void gui::Render() noexcept
 
 	ImGui::PopStyleVar(); // Restore the original style
 
-	// Add the blue separator line
+	// Add the green separator line
 	ImGui::SameLine();
 	ImGui::PushStyleColor(ImGuiCol_Separator, ImColor(117, 183, 69).Value);
 	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
