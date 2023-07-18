@@ -305,7 +305,7 @@ inline void CustomCheckbox(const char* format, bool* value) {
 void gui::Render() noexcept
 {
 	// Logo Size
-	ImVec2 logo_size(140, 60);
+	ImVec2 logo_size(150, 65);
 
 	// Cheat Tabs
 	static int selectedTabIndex = 0;
@@ -389,16 +389,34 @@ void gui::Render() noexcept
 	else if (selectedTabIndex == 1) // Visual Tab
 	{
 		CustomCheckbox(" ESP", &cbox::enableESP);
+		ImGui::SetCursorPos(ImVec2(-100, 10));
+		ImGui::ColorEdit4("##espColor", reinterpret_cast<float*>(&clr::espColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Force Team", &cbox::enableTeamESP);
+		ImGui::SetCursorPos(ImVec2(-100, 40));
+		ImGui::ColorEdit4("##teamColor", reinterpret_cast<float*>(&clr::teamColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 70));
 		CustomCheckbox(" Health", &cbox::enableHealthESP);
+		ImGui::SetCursorPos(ImVec2(-100, 70));
+		ImGui::ColorEdit4("##healthColor", reinterpret_cast<float*>(&clr::healthColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 100));
 		CustomCheckbox(" Name", &cbox::enableNameESP);
+		ImGui::SetCursorPos(ImVec2(-100, 100));
+		ImGui::ColorEdit4("##nameColor", reinterpret_cast<float*>(&clr::nameColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 130));
 		CustomCheckbox(" Snaplines", &cbox::enableSnaplines);
+		ImGui::SetCursorPos(ImVec2(-100, 130));
+		ImGui::ColorEdit4("##snaplinesColor", reinterpret_cast<float*>(&clr::snaplineColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 160));
 		CustomCheckbox(" Armor", &cbox::enableArmorESP);
+		ImGui::SetCursorPos(ImVec2(-100, 160));
+		ImGui::ColorEdit4("##armorColor", reinterpret_cast<float*>(&clr::armorColor));
+
 		ImGui::SetCursorPos(ImVec2(10, 190));
 		CustomCheckbox(" Fullbright", &cbox::enableFullbright);
 	}

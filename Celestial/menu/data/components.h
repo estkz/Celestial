@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../imgui/imgui.h"
+
 // Buttons
 namespace btn
 {
@@ -50,5 +52,10 @@ namespace sFloat
 // Color Pickers
 namespace clr
 {
-
+	ImColor espColor = ImColor{ 117, 183, 69, 255 };
+	ImColor teamColor = ImColor{ 117, 183, 69, 255 };
+	ImColor healthColor = ImColor{ 117, 183, 69, 255 };
+	ImColor snaplineColor = ImColor{ 117, 183, 69, 255 };
+	ImColor nameColor = ImColor{ 117, 183, 69, 255 };
+	ImColor armorColor = ImColor{ 117, 183, 69, 255 };
 }
