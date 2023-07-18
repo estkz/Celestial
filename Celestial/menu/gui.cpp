@@ -381,24 +381,38 @@ void gui::Render() noexcept
 	if (selectedTabIndex == 0) // Aim Tab
 	{
 		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
-		ImGui::SetCursorPos(ImVec2(10, 40)); // X=10, Y=10 (adjust as needed)
+		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" No Recoil", &cbox::enableRecoil);
-		ImGui::SetCursorPos(ImVec2(10, 70)); // X=10, Y=10 (adjust as needed)
+		ImGui::SetCursorPos(ImVec2(10, 70)); 
 		CustomCheckbox(" Triggerbot", &cbox::enableTriggerbot);
 	}
 	else if (selectedTabIndex == 1) // Visual Tab
 	{
 		CustomCheckbox(" ESP", &cbox::enableESP);
+		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Force Team", &cbox::enableTeamESP);
+		ImGui::SetCursorPos(ImVec2(10, 70));
 		CustomCheckbox(" Health", &cbox::enableHealthESP);
+		ImGui::SetCursorPos(ImVec2(10, 100));
 		CustomCheckbox(" Name", &cbox::enableNameESP);
+		ImGui::SetCursorPos(ImVec2(10, 130));
 		CustomCheckbox(" Snaplines", &cbox::enableSnaplines);
+		ImGui::SetCursorPos(ImVec2(10, 160));
 		CustomCheckbox(" Armor", &cbox::enableArmorESP);
+		ImGui::SetCursorPos(ImVec2(10, 190));
 		CustomCheckbox(" Fullbright", &cbox::enableFullbright);
 	}
 	else if (selectedTabIndex == 2) // Misc Tab
 	{
 		CustomCheckbox(" Bunnyhop", &cbox::enableBhop);
+		ImGui::SetCursorPos(ImVec2(10, 40));
+		CustomCheckbox(" Engine Radar", &cbox::enableRadar);
+		ImGui::SetCursorPos(ImVec2(10, 70));
+		CustomCheckbox(" Teleport", &cbox::enableTeleport);
+		ImGui::SetCursorPos(ImVec2(10, 100));
+		CustomCheckbox(" Speed", &cbox::enableSpeed);
+		ImGui::SetCursorPos(ImVec2(10, 130));
+		CustomCheckbox(" Magnet", &cbox::enableSpeed);
 	}
 	else if (selectedTabIndex == 3) // Config Tab
 	{
