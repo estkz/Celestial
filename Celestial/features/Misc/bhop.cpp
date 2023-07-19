@@ -1,4 +1,6 @@
-#include "../../menu/data/components.h"
+/*
+#pragma once
+#include "../../menu/gui.cpp"
 
 void bhop()
 {
@@ -7,3 +9,4 @@ void bhop()
 
 	}
 }
+*/

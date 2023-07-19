@@ -428,6 +428,12 @@ void gui::Render() noexcept
 	{
 		CustomCheckbox(" Bunnyhop", &cbox::enableBhop);
 		ImGui::SetCursorPos(ImVec2(10, 40));
+
+		if (cbox::enableBhop)
+		{
+
+		}
+
 		CustomCheckbox(" Engine Radar", &cbox::enableRadar);
 		ImGui::SetCursorPos(ImVec2(10, 70));
 		CustomCheckbox(" Teleport", &cbox::enableTeleport);
