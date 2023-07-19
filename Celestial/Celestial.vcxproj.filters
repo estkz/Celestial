@@ -54,6 +54,9 @@
     <ClInclude Include="menu\data\logo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="memory\offsets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="menu\gui.cpp">

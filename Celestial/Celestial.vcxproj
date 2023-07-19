@@ -144,6 +144,7 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="memory\memory.h" />
+    <ClInclude Include="memory\offsets.h" />
     <ClInclude Include="menu\data\components.h" />
     <ClInclude Include="menu\data\font_awesome.h" />
     <ClInclude Include="menu\data\logo.h" />

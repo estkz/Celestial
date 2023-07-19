@@ -92,6 +92,10 @@ long __stdcall WindowProcess(
 
 				rect.left += points.x - gui::position.x;
 				rect.top += points.y - gui::position.y;
+
+				if (gui::position.x >= 0 &&
+					gui::position.x <= 155 &&
+					gui::position.y >= 0 && gui::position.y <= 78)
 				SetWindowPos(gui::window, HWND_TOPMOST, rect.left, rect.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
 			}
 		} return 0;
