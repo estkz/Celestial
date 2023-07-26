@@ -294,7 +294,7 @@ inline void CenterButtons(std::vector<std::string> names, std::vector<int> index
 	float total_area = 0.0f;
 
 	const auto& style = ImGui::GetStyle();
-	const float spacing = 2.0f; // Set the vertical spacing between buttons
+	const float spacing = -1.0f; // Set the vertical spacing between buttons
 
 	for (std::string& name : names) {
 		const ImVec2 label_size = ImGui::CalcTextSize(name.c_str(), 0, true);
@@ -307,9 +307,9 @@ inline void CenterButtons(std::vector<std::string> names, std::vector<int> index
 		total_area += size.x;
 	}
 
-	// Place buttons in the middle of the child
-	ImGui::Dummy(ImVec2(0, 50));
-
+	// Lower the buttons in selection_panel
+	ImGui::Dummy(ImVec2(0, 18));
+	
 	for (uint32_t i = 0; i < names.size(); i++) {
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + spacing); // Adjust the vertical position here
 
