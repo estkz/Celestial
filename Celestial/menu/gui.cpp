@@ -289,6 +289,51 @@ void gui::EndRender() noexcept
 	[+] ----------------------------- [+]
 */
 
+inline void CenterButtons(std::vector<std::string> names, std::vector<int> indexes, int& selected_index) {
+	std::vector<ImVec2> sizes = {};
+	float total_area = 0.0f;
+
+	const auto& style = ImGui::GetStyle();
+	const float spacing = 2.0f; // Set the vertical spacing between buttons
+
+	for (std::string& name : names) {
+		const ImVec2 label_size = ImGui::CalcTextSize(name.c_str(), 0, true);
+		ImVec2 size = ImGui::CalcItemSize(ImVec2(), label_size.x + style.FramePadding.x * 2.0f, label_size.y + style.FramePadding.y * 2.0f);
+
+		size.x += 45.5f;
+		size.y += 15.f;
+
+		sizes.push_back(size);
+		total_area += size.x;
+	}
+
+	// Place buttons in the middle of the child
+	ImGui::Dummy(ImVec2(0, 50));
+
+	for (uint32_t i = 0; i < names.size(); i++) {
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + spacing); // Adjust the vertical position here
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+
+		if (selected_index == indexes[i]) {
+			ImGui::PushStyleColor(ImGuiCol_Button, ImColor(117, 183, 69, 255).Value);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor(117, 183, 69, 255).Value);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor(117, 183, 69, 255).Value);
+
+			if (ImGui::Button(names[i].c_str(), sizes[i]))
+				selected_index = indexes[i];
+			ImGui::PopStyleColor(3);
+		}
+		else {
+			if (ImGui::Button(names[i].c_str(), sizes[i]))
+				selected_index = indexes[i];
+		}
+
+		ImGui::PopStyleVar();
+	}
+}
+
+
 inline void CustomCheckbox(const char* format, bool* value) {
 	ImGuiStyle& style = ImGui::GetStyle();
 	ImVec4 colorFrameBg = style.Colors[ImGuiCol_FrameBg];
@@ -298,12 +343,18 @@ inline void CustomCheckbox(const char* format, bool* value) {
 		style.Colors[ImGuiCol_FrameBg] = ImVec4(117 / 255.0f, 183 / 255.0f, 69 / 255.0f, 1.0f);
 	}
 
+	ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1.5f, 1.5f));
+	ImGui::PushStyleColor(ImGuiCol_Border, ImColor(117, 183, 69).Value);
+
 	ImGui::Checkbox(format, value);
+
+	ImGui::PopStyleColor();
+	ImGui::PopStyleVar(2);
+	ImGui::Dummy(ImVec2());
 
 	// Restore the original color after rendering the checkbox
 	style.Colors[ImGuiCol_FrameBg] = colorFrameBg;
-
-	ImGui::Dummy(ImVec2());
 }
 
 void gui::Render() noexcept
@@ -313,7 +364,6 @@ void gui::Render() noexcept
 
 	// Cheat Tabs
 	static int selectedTabIndex = 0;
-	static const char* tabs[] = { ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" };
 
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
@@ -345,23 +395,7 @@ void gui::Render() noexcept
 	// Add the grey separator line
 	ImGui::Separator();
 
-	// Add some empty space to make buttons appear a bit lower
-	ImGui::Dummy(ImVec2(0, 17));
-
-	// Adjust the button height here (default height is 0, which means auto-sizing)
-	ImVec2 buttonSize = ImVec2(-1, 30); // Set the height to 30 pixels
-
-	ImColor unselectedColor(24, 24, 24); // RGB values (0-255) converted to ImColor
-	ImColor selectedColor(34, 34, 34);   // RGB values (0-255) converted to ImColor
-
-	for (int i = 0; i < sizeof(tabs) / sizeof(tabs[0]); ++i) {
-		ImVec4 buttonColor = (selectedTabIndex == i) ? selectedColor : unselectedColor;
-		ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
-		if (ImGui::Button(tabs[i], buttonSize)) {
-			selectedTabIndex = i;
-		}
-		ImGui::PopStyleColor();
-	}
+	CenterButtons({ ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" }, { 0, 1, 2, 3 }, selectedTabIndex);
 
 	ImGui::EndChild();
 
@@ -384,6 +418,7 @@ void gui::Render() noexcept
 	// Render the appropriate content for the selected tab
 	if (selectedTabIndex == 0) // Aim Tab
 	{
+
 		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" No Recoil", &cbox::enableRecoil);
