@@ -480,6 +480,8 @@ void gui::Render() noexcept
 	else if (selectedTabIndex == 3) // Config Tab
 	{
 		CustomCheckbox(" Config", &cbox::cbConfig);
+
+		// Remove checkbox later and implement an actual config system
 	}
 
 	ImGui::EndChild();
