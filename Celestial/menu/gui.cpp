@@ -479,9 +479,16 @@ void gui::Render() noexcept
 	}
 	else if (selectedTabIndex == 3) // Config Tab
 	{
-		CustomCheckbox(" Config", &cbox::cbConfig);
+		
 
-		// Remove checkbox later and implement an actual config system
+		
+		ImGui::Button("Load");
+		ImGui::SetCursorPos(ImVec2(10, 40));
+		ImGui::Button("Save");
+		ImGui::SetCursorPos(ImVec2(10, 70));
+		ImGui::Button("Delete");
+		ImGui::SetCursorPos(ImVec2(10, 100));
+		ImGui::Button("Reset");
 	}
 
 	ImGui::EndChild();
