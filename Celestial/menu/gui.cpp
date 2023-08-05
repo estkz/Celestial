@@ -475,7 +475,7 @@ void gui::Render() noexcept
 		ImGui::SetCursorPos(ImVec2(10, 100));
 		CustomCheckbox(" Speed", &cbox::enableSpeed);
 		ImGui::SetCursorPos(ImVec2(10, 130));
-		CustomCheckbox(" Magnet", &cbox::enableSpeed);
+		CustomCheckbox(" Magnet", &cbox::enableMagnet);
 	}
 	else if (selectedTabIndex == 3) // Config Tab
 	{
