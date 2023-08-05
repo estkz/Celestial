@@ -483,9 +483,9 @@ void gui::Render() noexcept
 		const char* configs[] = { "estetik" };
 		static int currentConfig = -1;
 
-		// ImGui::PushItemWidth(-1);
+		
 		ImGui::ListBox("##lboxConfigs", &currentConfig, configs, IM_ARRAYSIZE(configs), 5);
-		// ImGui::PopItemWidth();
+		
 		
 		ImGui::SetCursorPos(ImVec2(10, 120));
 		ImGui::Button("Load");
