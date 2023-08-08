@@ -1,15 +1,10 @@
-/*
-#pragma once
-#include "../../menu/gui.cpp"
+#include "../../features/Misc/bhop.h"
+#include <iostream> 
+#include <windows.h>
 
 void bhop()
 {
-	if (cbox::enableBhop)
-	{
-
-	}
+	Beep(200, 200);
 }
 
-// TODO: Fix includes
-//
-*/
+

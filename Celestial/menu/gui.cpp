@@ -18,6 +18,7 @@
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+#include "../features/Misc/bhop.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -466,7 +467,7 @@ void gui::Render() noexcept
 
 		if (cbox::enableBhop)
 		{
-
+			bhop();
 		}
 
 		CustomCheckbox(" Engine Radar", &cbox::enableRadar);
