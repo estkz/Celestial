@@ -19,6 +19,7 @@
 #pragma comment (lib, "d3dx9.lib")
 
 #include "../features/Misc/bhop.h"
+#include "../features//Trainer/godmode.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -468,6 +469,7 @@ void gui::Render() noexcept
 		if (cbox::enableBhop)
 		{
 			bhop();
+			cbox::enableBhop = false;
 		}
 
 		CustomCheckbox(" Engine Radar", &cbox::enableRadar);
@@ -481,6 +483,11 @@ void gui::Render() noexcept
 	else if (selectedTabIndex == 3) // Config Tab
 	{
 		CustomCheckbox(" Infinite Health", &cbox::infiniteHealth);
+
+		if (cbox::infiniteHealth)
+		{
+			godmode();
+		}
 
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Infinite Armor", &cbox::infiniteArmor);

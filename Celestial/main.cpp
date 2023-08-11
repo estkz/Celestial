@@ -12,6 +12,7 @@
 
 // Gui Function Includes
 #include "menu/gui.h"
+#include "memory/memory.h"
 
 // Miscellaneous Related Includes
 #include <thread>
