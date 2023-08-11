@@ -135,7 +135,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="features\Aimbot\aimbot.h" />
+    <ClInclude Include="features\Aimbot\norecoil.h" />
+    <ClInclude Include="features\Aimbot\triggerbot.h" />
     <ClInclude Include="features\Misc\bhop.h" />
+    <ClInclude Include="features\Misc\magnet.h" />
+    <ClInclude Include="features\Misc\radar.h" />
+    <ClInclude Include="features\Misc\speed.h" />
+    <ClInclude Include="features\Misc\teleport.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />
@@ -152,7 +159,14 @@
     <ClInclude Include="menu\gui.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="features\Aimbot\aimbot.cpp" />
+    <ClCompile Include="features\Aimbot\norecoil.cpp" />
+    <ClCompile Include="features\Aimbot\triggerbot.cpp" />
     <ClCompile Include="features\Misc\bhop.cpp" />
+    <ClCompile Include="features\Misc\magnet.cpp" />
+    <ClCompile Include="features\Misc\radar.cpp" />
+    <ClCompile Include="features\Misc\speed.cpp" />
+    <ClCompile Include="features\Misc\teleport.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
