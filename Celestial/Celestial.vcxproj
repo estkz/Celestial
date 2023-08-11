@@ -143,6 +143,12 @@
     <ClInclude Include="features\Misc\radar.h" />
     <ClInclude Include="features\Misc\speed.h" />
     <ClInclude Include="features\Misc\teleport.h" />
+    <ClInclude Include="features\Visuals\armor.h" />
+    <ClInclude Include="features\Visuals\esp.h" />
+    <ClInclude Include="features\Visuals\fullbright.h" />
+    <ClInclude Include="features\Visuals\health.h" />
+    <ClInclude Include="features\Visuals\name.h" />
+    <ClInclude Include="features\Visuals\snaplines.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />
@@ -167,6 +173,12 @@
     <ClCompile Include="features\Misc\radar.cpp" />
     <ClCompile Include="features\Misc\speed.cpp" />
     <ClCompile Include="features\Misc\teleport.cpp" />
+    <ClCompile Include="features\Visuals\armor.cpp" />
+    <ClCompile Include="features\Visuals\esp.cpp" />
+    <ClCompile Include="features\Visuals\fullbright.cpp" />
+    <ClCompile Include="features\Visuals\health.cpp" />
+    <ClCompile Include="features\Visuals\name.cpp" />
+    <ClCompile Include="features\Visuals\snaplines.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />

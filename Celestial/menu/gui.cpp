@@ -396,7 +396,7 @@ void gui::Render() noexcept
 	// Add the grey separator line
 	ImGui::Separator();
 
-	CenterButtons({ ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_FOLDER "  Config" }, { 0, 1, 2, 3 }, selectedTabIndex);
+	CenterButtons({ ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_DATABASE "  Trainer", ICON_FA_FOLDER "  Config" }, { 0, 1, 2, 3, 4}, selectedTabIndex);
 
 	ImGui::EndChild();
 
@@ -480,14 +480,26 @@ void gui::Render() noexcept
 	}
 	else if (selectedTabIndex == 3) // Config Tab
 	{
-		
+		CustomCheckbox(" Infinite Health", &cbox::infiniteHealth);
+
+		ImGui::SetCursorPos(ImVec2(10, 40));
+		CustomCheckbox(" Infinite Armor", &cbox::infiniteArmor);
+
+		ImGui::SetCursorPos(ImVec2(10, 70));
+		CustomCheckbox(" Infinite Ammo", &cbox::infiniteGunAmmo);
+
+		ImGui::SetCursorPos(ImVec2(10, 100));
+		CustomCheckbox(" Infinite Nades", &cbox::infiniteNades);
+	}
+	else if (selectedTabIndex == 4)
+	{
 		const char* configs[] = { "estetik" };
 		static int currentConfig = -1;
 
 		// ImGui::PushItemWidth(-1);
 		ImGui::ListBox("##lboxConfigs", &currentConfig, configs, IM_ARRAYSIZE(configs), 5);
 		// ImGui::PopItemWidth();
-		
+
 		ImGui::SetCursorPos(ImVec2(10, 120));
 		ImGui::Button("Load");
 		ImGui::SetCursorPos(ImVec2(10, 150));

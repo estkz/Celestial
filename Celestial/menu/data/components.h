@@ -32,6 +32,12 @@ namespace cbox
 	static bool enableSpeed = false;
 	static bool enableMagnet = false;
 
+	// Trainer
+	static bool infiniteHealth = false;
+	static bool infiniteArmor = false;
+	static bool infiniteGunAmmo = false;
+	static bool infiniteNades = false;
+
 
 	// Config
 	static bool cbConfig = false;

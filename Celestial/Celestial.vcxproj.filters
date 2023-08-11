@@ -81,6 +81,24 @@
     <ClInclude Include="features\Misc\radar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="features\Visuals\esp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Visuals\health.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Visuals\name.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Visuals\snaplines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Visuals\armor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Visuals\fullbright.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="menu\gui.cpp">
@@ -135,6 +153,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="features\Misc\radar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\esp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\health.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\name.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\snaplines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\armor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="features\Visuals\fullbright.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
