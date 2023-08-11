@@ -396,7 +396,7 @@ void gui::Render() noexcept
 	// Add the grey separator line
 	ImGui::Separator();
 
-	CenterButtons({ ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visual", ICON_FA_COG "  Misc", ICON_FA_DATABASE "  Trainer", ICON_FA_FOLDER "  Config" }, { 0, 1, 2, 3, 4}, selectedTabIndex);
+	CenterButtons({ ICON_FA_CROSSHAIRS "  Aimbot", ICON_FA_EYE "  Visuals", ICON_FA_COG "  Misc", ICON_FA_DATABASE "  Trainer", ICON_FA_FOLDER "  Config" }, { 0, 1, 2, 3, 4}, selectedTabIndex);
 
 	ImGui::EndChild();
 
