@@ -111,7 +111,7 @@
     <ClInclude Include="features\Trainer\godmode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="memory\proc.h">
+    <ClInclude Include="memory\memInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

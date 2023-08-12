@@ -1,6 +1,6 @@
 #include "../../memory/memory.h"
 #include "../../memory/offsets.h"
-#include "../../memory/proc.h"
+#include "../../memory/memInterface.h"
 
 #include "../../imgui/imgui_impl_dx9.h"
 
