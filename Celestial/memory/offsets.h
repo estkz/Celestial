@@ -21,11 +21,11 @@
 */
 
 // Lists
-static const uintptr_t localPlayer = 0x17E0A8;
+constexpr auto localPlayer = 0x17E0A8;
 static const uintptr_t entityList = 0x18AC04;
 
 // Player
-static const uintptr_t ptrHealth = 0xEC;
+constexpr auto ptrHealth = 0xEC;
 static const uintptr_t ptrName = 0x205;
 static const uintptr_t ptrArmor = 0xF0;
 static const uintptr_t ptrXCoord = 0x28;

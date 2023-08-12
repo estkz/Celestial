@@ -1,4 +1,3 @@
-#include "godmode.h"
 #include "../../memory/memory.h"
 #include "../../memory/offsets.h"
 
@@ -7,24 +6,20 @@
 #include "../../imgui/imgui_impl_win32.h"
 #include "../../imgui/imgui_internal.h"
 
-#include <iostream>
-
-
-Memory memory("ac_client.exe");
-
-// Get the base address of the module
-std::uintptr_t moduleBase = memory.GetModuleAddress("ac_client.exe");
-std::uintptr_t healthAddress = moduleBase + ptrHealth;
-
+Memory memory{ "ac_client.exe" };
+const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
 
 void godmode()
 {
-    int health = memory.Read<int>(healthAddress);
+    const auto localPlayerPtr = memory.Read<std::uintptr_t>(moduleBase + localPlayer);
+    const auto healthAddress = localPlayerPtr + ptrHealth;
 
-    ImGui::Begin("God Mode");
+    const int newValue = 1337;
+    memory.Write<int>(healthAddress, newValue);
+
+    ImGui::Begin("God Mode - Developer Screen");
     ImGui::Text("Module Base Address: 0x%X", moduleBase);
-    ImGui::Text("Health: %d", health);
+    ImGui::Text("Health Address: 0x%X", healthAddress);
+    ImGui::Text("Health: %d", newValue);
     ImGui::End();
 }
-
-// Fixing soon

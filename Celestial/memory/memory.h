@@ -46,10 +46,10 @@ public:
 
 	const std::uintptr_t GetModuleAddress(const std::string_view moduleName) const noexcept
 	{
-		::MODULEENTRY32 entry = { };
+		::MODULEENTRY32 entry = {};
 		entry.dwSize = sizeof(::MODULEENTRY32);
 
-		const auto procSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, procId);
+		const auto procSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, procId);
 
 		std::uintptr_t moduleBase = 0;
 
@@ -81,6 +81,6 @@ public:
 	template <typename T>
 	constexpr void Write(const std::uintptr_t& address, const T& value) const noexcept
 	{
-		::WriteProcessMemory(processHandle, reinterpret_cast<void*>(address, &value, sizeof(T), NULL));
+		::WriteProcessMemory(processHandle, reinterpret_cast<void*>(address), &value, sizeof(T), NULL);
 	}
 };
