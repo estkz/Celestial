@@ -20,5 +20,8 @@ constexpr auto vec3_origin = 0x28;
 constexpr auto vec3_head = 0x4;
 constexpr auto iTeamNum = 0x30C;
 
+// Weapons
+constexpr auto ptrNades = 0x144;
+
 // Hacks
 constexpr auto rapidFire = 0x164;

@@ -22,6 +22,8 @@
 #include "../features/Misc/bhop.h"
 #include "../features/Trainer/godmode.h"
 #include "../features/Trainer/infAmmo.h"
+#include "../features/Trainer/infNades.h"
+#include "../features/Trainer/infArmor.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -492,6 +494,9 @@ void gui::Render() noexcept
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Infinite Armor", &cbox::infiniteArmor);
 
+		if (cbox::infiniteArmor)
+			infiniteArmor();
+
 		ImGui::SetCursorPos(ImVec2(10, 70));
 		CustomCheckbox(" Infinite Ammo", &cbox::infiniteGunAmmo);
 
@@ -500,6 +505,9 @@ void gui::Render() noexcept
 
 		ImGui::SetCursorPos(ImVec2(10, 100));
 		CustomCheckbox(" Infinite Nades", &cbox::infiniteNades);
+
+		if (cbox::infiniteNades)
+			infiniteNades();
 	}
 	else if (selectedTabIndex == 4)
 	{
