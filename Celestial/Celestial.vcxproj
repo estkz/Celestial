@@ -145,6 +145,9 @@
     <ClInclude Include="features\Misc\speed.h" />
     <ClInclude Include="features\Misc\teleport.h" />
     <ClInclude Include="features\Trainer\godmode.h" />
+    <ClInclude Include="features\Trainer\infAmmo.h" />
+    <ClInclude Include="features\Trainer\infArmor.h" />
+    <ClInclude Include="features\Trainer\infNades.h" />
     <ClInclude Include="features\Visuals\armor.h" />
     <ClInclude Include="features\Visuals\esp.h" />
     <ClInclude Include="features\Visuals\fullbright.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="memory\memory.h" />
     <ClInclude Include="memory\offsets.h" />
+    <ClInclude Include="memory\proc.h" />
     <ClInclude Include="menu\data\components.h" />
     <ClInclude Include="menu\data\font_awesome.h" />
     <ClInclude Include="menu\data\logo.h" />
@@ -176,6 +180,9 @@
     <ClCompile Include="features\Misc\speed.cpp" />
     <ClCompile Include="features\Misc\teleport.cpp" />
     <ClCompile Include="features\Trainer\godmode.cpp" />
+    <ClCompile Include="features\Trainer\infAmmo.cpp" />
+    <ClCompile Include="features\Trainer\infArmor.cpp" />
+    <ClCompile Include="features\Trainer\infNades.cpp" />
     <ClCompile Include="features\Visuals\armor.cpp" />
     <ClCompile Include="features\Visuals\esp.cpp" />
     <ClCompile Include="features\Visuals\fullbright.cpp" />
@@ -190,6 +197,7 @@
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="memory\memory.cpp" />
     <ClCompile Include="menu\data\font_awesome.cpp" />
     <ClCompile Include="menu\gui.cpp" />
   </ItemGroup>

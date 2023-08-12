@@ -1,6 +1,7 @@
 // Menu Related Includes
 
 #include "../menu/gui.h"
+#include "../memory/memory.h"
 
 #include "data/font_awesome.cpp"
 #include "data/font_awesome.h"
@@ -19,7 +20,8 @@
 #pragma comment (lib, "d3dx9.lib")
 
 #include "../features/Misc/bhop.h"
-#include "../features//Trainer/godmode.h"
+#include "../features/Trainer/godmode.h"
+#include "../features/Trainer/infAmmo.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -485,15 +487,16 @@ void gui::Render() noexcept
 		CustomCheckbox(" Infinite Health", &cbox::infiniteHealth);
 
 		if (cbox::infiniteHealth)
-		{
 			godmode();
-		}
 
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Infinite Armor", &cbox::infiniteArmor);
 
 		ImGui::SetCursorPos(ImVec2(10, 70));
 		CustomCheckbox(" Infinite Ammo", &cbox::infiniteGunAmmo);
+
+		if (cbox::infiniteGunAmmo)
+			infiniteAmmo();
 
 		ImGui::SetCursorPos(ImVec2(10, 100));
 		CustomCheckbox(" Infinite Nades", &cbox::infiniteNades);
