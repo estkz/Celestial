@@ -12,10 +12,4 @@ void infiniteAmmo()
 
     const int newAmmo = 1337;
     memory.Write<int>(ammoAddress, newAmmo);
-
-    ImGui::Begin("Infinite Ammo - Developer Screen");
-    ImGui::Text("Module Base Address: 0x%X", moduleBase);
-    ImGui::Text("Ammo Address: 0x%X", ammoAddress);
-    ImGui::Text("Ammo: %d", memory.Read<int>(ammoAddress));
-    ImGui::End();
 }
