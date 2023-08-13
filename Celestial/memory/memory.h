@@ -38,6 +38,7 @@ public:
 			::CloseHandle(procSnap);
 	}
 
+	// Memory Deconstructor - cleanup by closing the process handle to the game's memory.
 	~Memory()
 	{
 		if (processHandle)
