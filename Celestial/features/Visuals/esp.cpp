@@ -73,7 +73,7 @@ void drawESP()
 	int localTeam = memory.Read<DWORD>(moduleBase + dwEntityList) + iTeamNum;
 
 	for (int i = 1; i < 32; i++) {
-		uintptr_t pEnt = memory.Read<DWORD>(moduleBase + dwEntityList + (i + 0x4));
+		uintptr_t pEnt = memory.Read<DWORD>(moduleBase + dwEntityList + (i * 0x4));
 
 		// Get Entity Information
 		int health = memory.Read<int>(pEnt + m_iHealth);
