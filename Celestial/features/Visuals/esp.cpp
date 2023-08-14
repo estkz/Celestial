@@ -107,8 +107,6 @@ void drawESP()
 		if (screenPosition.z >= 0.01f && entTeamNum != localTeam && entHealth > 0 && entHealth < 101) {
 			DrawBorderBox(screenPosition.y - (playerWidth / 2), screenPosition.y, playerWidth, playerHeight, 1);
 		}
-		
-
 
 
 
