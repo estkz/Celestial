@@ -15,7 +15,7 @@ int screenX = GetSystemMetrics(SM_CXSCREEN);
 int screenY = GetSystemMetrics(SM_CYSCREEN);
 
 const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
-HDC hdc = GetDC(FindWindow(NULL, " AssaultCube"));
+HDC hdc = GetDC(FindWindowA(NULL, "AssaultCube"));
 
 // Math Structures
 struct Vector3 {
@@ -70,10 +70,10 @@ void DrawBorderBox(int x, int y, int w, int h, int thickness) {
 void drawESP()
 {
 	view_matrix_t viewmatrix = memory.Read<view_matrix_t>(moduleBase + dwViewMatrix);
-	int localTeam = memory.Read<DWORD>(moduleBase + dwEntityList + iTeamNum);
+	int localTeam = memory.Read<DWORD>(moduleBase + dwEntityList) + iTeamNum;
 
 	for (int i = 1; i < 32; i++) {
-		uintptr_t pEnt = memory.Read<DWORD>(moduleBase + dwEntityList + (i + 0x04));
+		uintptr_t pEnt = memory.Read<DWORD>(moduleBase + dwEntityList + (i + 0x4));
 
 		// Get Entity Information
 		int health = memory.Read<int>(pEnt + m_iHealth);

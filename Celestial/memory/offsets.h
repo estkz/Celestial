@@ -21,6 +21,10 @@ constexpr auto vec3_head = 0x4;
 constexpr auto iTeamNum = 0x30C;
 constexpr auto dwViewMatrix = 0x501AE8; // Maybe 0x57DFD0 or 0x17DFFC -> Must find the right offset first lol
 
+// 0x17E010, 
+// 0x17E060
+// 0x192088
+
 // Weapons
 constexpr auto m_Nades = 0x144;
 
