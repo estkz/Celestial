@@ -25,6 +25,8 @@ constexpr auto dwViewMatrix = 0x501AE8; // Maybe 0x57DFD0 or 0x17DFFC -> Must fi
 // 0x17E060
 // 0x192088
 
+// Prob it: 0x17DFFC-0x6C+ 0x4*16
+
 // Weapons
 constexpr auto m_Nades = 0x144;
 

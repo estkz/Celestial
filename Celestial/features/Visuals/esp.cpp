@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 #include <TlHelp32.h>
+#include "../../imgui/imgui.h"
 
 // Global Variables
 unsigned char eESPColor = 0x000000FF;
@@ -90,6 +91,10 @@ void drawESP()
 		// Calculate the height of the player
 		float playerHeight = screenHead.y - screenPosition.y;
 		float playerWidth = playerHeight / 2.4f;
+
+		ImGui::Begin("test");
+		ImGui::Text("Entity %d Team Number: %d", i, team);
+		ImGui::End();
 
 		if (screenPosition.z >= 0.01f && team != localTeam && health > 0 && health < 101) {
 			DrawBorderBox(screenPosition.y - (playerWidth / 2), screenPosition.y, playerWidth, playerHeight, 1);
