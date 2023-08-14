@@ -70,36 +70,23 @@ void DrawBorderBox(int x, int y, int w, int h, int thickness) {
 
 void drawESP()
 {
-	view_matrix_t viewmatrix = memory.Read<view_matrix_t>(moduleBase + dwViewMatrix);
-	int localTeam = memory.Read<DWORD>(moduleBase + dwEntityList) + iTeamNum;
+	// Local Variables
+	const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
+	const auto entityListPtr = memory.Read<std::uintptr_t>(moduleBase + dwEntityList);
 
-	for (int i = 1; i < 32; i++) {
-		uintptr_t pEnt = memory.Read<DWORD>(moduleBase + dwEntityList + (i * 0x4));
+	constexpr int totalEntities = 32;
+	constexpr int entityStride = 0x4;
 
-		// Get Entity Information
-		int health = memory.Read<int>(pEnt + m_iHealth);
-		int team = memory.Read<int>(pEnt + iTeamNum);
-		Vector3 position = memory.Read<Vector3>(pEnt + m_vecOrigin);
-		Vector3 head;
-		head.x = position.x;
-		head.y = position.y;
-		head.z = position.z + 75.f;
+	for (int i = 1; i < totalEntities; i++) {
 
-		Vector3 screenPosition = WorldToScreen(position, viewmatrix);
-		Vector3 screenHead = WorldToScreen(head, viewmatrix);
+		const auto pEnt = memory.Read<DWORD>(entityListPtr + (i * entityStride));
+		const auto entTeamNum = memory.Read<int>(pEnt + iTeamNum);
 
-		// Calculate the height of the player
-		float playerHeight = screenHead.y - screenPosition.y;
-		float playerWidth = playerHeight / 2.4f;
-
-		ImGui::Begin("test");
-		ImGui::Text("Entity %d Team Number: %d", i, team);
+		ImGui::Begin("Dev Screen");
+		ImGui::Text("Entity %d teamNum: %d", i, entTeamNum);
 		ImGui::End();
-
-		if (screenPosition.z >= 0.01f && team != localTeam && health > 0 && health < 101) {
-			DrawBorderBox(screenPosition.y - (playerWidth / 2), screenPosition.y, playerWidth, playerHeight, 1);
-		}
 	}
+
 }
 
 // Fixing the ESP soon!
