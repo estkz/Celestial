@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <TlHelp32.h>
 #include "../../imgui/imgui.h"
+#include <string>
 
 // Global Variables
 unsigned char eESPColor = 0x000000FF;
@@ -73,6 +74,9 @@ void drawESP()
 	// Local Variables
 	const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
 	const auto entityListPtr = memory.Read<std::uintptr_t>(moduleBase + dwEntityList);
+	const auto localPlayerPtr = memory.Read<std::uintptr_t>(moduleBase + localPlayer);
+
+	view_matrix_t viewmatrix = memory.Read<view_matrix_t>(moduleBase + dwViewMatrix);
 
 	constexpr int totalEntities = 32;
 	constexpr int entityStride = 0x4;
@@ -80,13 +84,55 @@ void drawESP()
 	for (int i = 1; i < totalEntities; i++) {
 
 		const auto pEnt = memory.Read<DWORD>(entityListPtr + (i * entityStride));
-		const auto entTeamNum = memory.Read<int>(pEnt + iTeamNum);
+		int localTeam = memory.Read<DWORD>(localPlayerPtr + iTeamNum);
 
-		ImGui::Begin("Dev Screen");
-		ImGui::Text("Entity %d teamNum: %d", i, entTeamNum);
+		// pEnt | Player Information
+		const auto entTeamNum = memory.Read<int>(pEnt + iTeamNum);
+		const auto entHealth = memory.Read<int>(pEnt + m_iHealth);
+
+		Vector3 position = memory.Read<Vector3>(pEnt + m_vecOrigin);
+		Vector3 head;
+		head.x = position.x;
+		head.y = position.y;
+		head.z = position.z + 75.f;
+
+
+		// Screen / pHeight / pWidth information | For drawing the boxes
+		Vector3 screenPosition = WorldToScreen(position, viewmatrix);
+		Vector3 screenHead = WorldToScreen(head, viewmatrix);
+
+		float playerHeight = screenHead.y - screenPosition.y;
+		float playerWidth = playerHeight / 2.4f;
+
+		if (screenPosition.z >= 0.01f && entTeamNum != localTeam && entHealth > 0 && entHealth < 101) {
+			DrawBorderBox(screenPosition.y - (playerWidth / 2), screenPosition.y, playerWidth, playerHeight, 1);
+		}
+		
+
+
+
+
+
+
+		// Just for debugging purposes
+		ImGui::Begin(("My Local Team: " + std::to_string(localTeam)).c_str()); // Display local team in the title
+
+		if (entTeamNum == 0)
+		{
+			ImGui::Text("Entity %d teamNum: %d (red)", i, entTeamNum);
+		}
+		else
+		{
+			ImGui::Text("Entity %d teamNum: %d (blue)", i, entTeamNum);
+		}
+		ImGui::Text("Entity %d health: %d", i, entHealth);
+		ImGui::Text(" ");
 		ImGui::End();
 	}
 
 }
 
 // Fixing the ESP soon!
+// update log -> 
+// 1. fixed the variables (does find the right paths now of -> pEnt/TeamNum/Health)
+// 2. Must find latest offset for viewMatrix to check which one is the right one (maybe that fixes the issue with esp not drawing)
