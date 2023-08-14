@@ -8,7 +8,7 @@ void godmode()
 {
     const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
     const auto localPlayerPtr = memory.Read<std::uintptr_t>(moduleBase + localPlayer);
-    const auto healthAddress = localPlayerPtr + ptrHealth;
+    const auto healthAddress = localPlayerPtr + m_iHealth;
 
     const int newHealth = 1337;
     memory.Write<int>(healthAddress, newHealth);

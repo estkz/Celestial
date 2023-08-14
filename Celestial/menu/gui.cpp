@@ -24,6 +24,7 @@
 #include "../features/Trainer/infAmmo.h"
 #include "../features/Trainer/infNades.h"
 #include "../features/Trainer/infArmor.h"
+#include "../features/Visuals/esp.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -437,6 +438,9 @@ void gui::Render() noexcept
 		ImGui::SetCursorPos(ImVec2(-100, 10));
 		ImGui::ColorEdit4("##espColor", reinterpret_cast<float*>(&clr::espColor));
 
+		if (cbox::enableESP)
+			drawESP();
+
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" Force Team", &cbox::enableTeamESP);
 		ImGui::SetCursorPos(ImVec2(-100, 40));
@@ -484,7 +488,7 @@ void gui::Render() noexcept
 		ImGui::SetCursorPos(ImVec2(10, 130));
 		CustomCheckbox(" Magnet", &cbox::enableMagnet);
 	}
-	else if (selectedTabIndex == 3) // Config Tab
+	else if (selectedTabIndex == 3) // Trainer Tab
 	{
 		CustomCheckbox(" Infinite Health", &cbox::infiniteHealth);
 
@@ -509,7 +513,7 @@ void gui::Render() noexcept
 		if (cbox::infiniteNades)
 			infiniteNades();
 	}
-	else if (selectedTabIndex == 4)
+	else if (selectedTabIndex == 4) // Config Tab
 	{
 		const char* configs[] = { "estetik" };
 		static int currentConfig = -1;

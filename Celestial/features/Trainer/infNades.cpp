@@ -8,7 +8,7 @@ void infiniteNades()
 {
     const auto moduleBase = memory.GetModuleAddress("ac_client.exe");
     const auto localPlayerPtr = memory.Read<std::uintptr_t>(moduleBase + localPlayer);
-    const auto nadeAddress = localPlayerPtr + ptrNades;
+    const auto nadeAddress = localPlayerPtr + m_Nades;
 
     const int newNades = 10;
     memory.Write<int>(nadeAddress, newNades);
