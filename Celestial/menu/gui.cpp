@@ -25,6 +25,7 @@
 #include "../features/Trainer/infNades.h"
 #include "../features/Trainer/infArmor.h"
 #include "../features/Visuals/esp.h"
+#include "../features/Aimbot/norecoil.h"
 
 // Miscellaneous Related Includes
 #include <vector>
@@ -429,6 +430,10 @@ void gui::Render() noexcept
 		CustomCheckbox(" Aimbot", &cbox::enableAimbot);
 		ImGui::SetCursorPos(ImVec2(10, 40));
 		CustomCheckbox(" No Recoil", &cbox::enableRecoil);
+
+		if (cbox::enableRecoil)
+			noRecoil();
+
 		ImGui::SetCursorPos(ImVec2(10, 70)); 
 		CustomCheckbox(" Triggerbot", &cbox::enableTriggerbot);
 	}
