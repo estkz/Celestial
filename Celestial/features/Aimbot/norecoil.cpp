@@ -30,3 +30,4 @@ void noRecoil() {
 
 
 // Works to some extend, the delay between each shot is still causing the crosshair to move up a little bit.
+// To potentially fix this I should find the 'm_isPlayerShooting' offset for more accurate results.
