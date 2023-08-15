@@ -16,7 +16,7 @@ constexpr auto m_ZCoord = 0x30;
 constexpr auto m_ViewangleWidth = 0x34;
 constexpr auto m_ViewAngleHeight = 0x38;
 constexpr auto m_iRecoil = 0x40;
-constexpr auto m_iShotAmount = 0x180;
+constexpr auto m_iShotAmount = 0x180; // 180
 
 constexpr auto m_vecOrigin = 0x28;
 constexpr auto vec3_head = 0x4;
