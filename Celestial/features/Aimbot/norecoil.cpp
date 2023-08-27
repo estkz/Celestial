@@ -14,7 +14,7 @@ void ApplyNoRecoilPatch() {
 
     // Check if the player is shooting (timesShot increased since last check)
     if (timesShot != previousTimesShot) {
-        const uint8_t noRecoilPatch[] = { 0x90, 0x90, 0x90, 0x90, 0x90 }; // Your no recoil patch bytes
+        const uint8_t noRecoilPatch[] = { 0x90, 0x90, 0x90, 0x90, 0x90}; // Your no recoil patch bytes
         for (std::size_t i = 0; i < sizeof(noRecoilPatch); ++i) {
             memory.Write<uint8_t>(recoilAddress + i, noRecoilPatch[i]);
         }
