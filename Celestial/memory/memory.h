@@ -45,6 +45,7 @@ public:
 			::CloseHandle(processHandle);
 	}
 
+	// Get the Module Base Address
 	const std::uintptr_t GetModuleAddress(const std::string_view moduleName) const noexcept
 	{
 		::MODULEENTRY32 entry = {};
