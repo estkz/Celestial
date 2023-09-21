@@ -2,6 +2,11 @@
 
 #include <stdint.h>
 
+// What is constexpr?
+// By marking it as constexpr, you're telling the compiler that the value of localPlayer can be computed at compile time, and it can be used in contexts
+// where a compile-time constant is required.
+
+// I've marked the offsets as constexpr, because this is a way of telling the compiler that the values of each offset do NOT change during runtime.
 
 /*
 	Offsets for Assault Cube (32 bits)
