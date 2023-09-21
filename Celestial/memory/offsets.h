@@ -43,4 +43,4 @@ constexpr auto rapidFire = 0x164;
 	Offsets for Assault Cube (64 bits)
 */
 
-constexpr auto m_iHealth = 0x8;
+//constexpr auto m_iHealth = 0x8;
