@@ -365,6 +365,10 @@ inline void CustomCheckbox(const char* format, bool* value) {
 	style.Colors[ImGuiCol_FrameBg] = colorFrameBg;
 }
 
+//
+//	This marks the beginning of the cheat's menu, everything down below is used for the menu design!
+//
+
 void gui::Render() noexcept
 {
 	// Logo Size
