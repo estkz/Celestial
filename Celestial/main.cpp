@@ -17,6 +17,7 @@
 // Miscellaneous Related Includes
 #include <thread>
 
+// Main Entrypoint
 int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
 {
 	gui::CreateHWindow("Celestial");
