@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>"$(DXSDK_DIR)LIB\x86";$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)build</OutDir>
+    <OutDir>$(SolutionDir)build\</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -136,24 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="features\Aimbot\aimbot.h" />
-    <ClInclude Include="features\Aimbot\norecoil.h" />
-    <ClInclude Include="features\Aimbot\triggerbot.h" />
-    <ClInclude Include="features\Misc\bhop.h" />
-    <ClInclude Include="features\Misc\magnet.h" />
-    <ClInclude Include="features\Misc\radar.h" />
-    <ClInclude Include="features\Misc\speed.h" />
-    <ClInclude Include="features\Misc\teleport.h" />
-    <ClInclude Include="features\Trainer\godmode.h" />
-    <ClInclude Include="features\Trainer\infAmmo.h" />
-    <ClInclude Include="features\Trainer\infArmor.h" />
-    <ClInclude Include="features\Trainer\infNades.h" />
-    <ClInclude Include="features\Visuals\armor.h" />
-    <ClInclude Include="features\Visuals\esp.h" />
-    <ClInclude Include="features\Visuals\fullbright.h" />
-    <ClInclude Include="features\Visuals\health.h" />
-    <ClInclude Include="features\Visuals\name.h" />
-    <ClInclude Include="features\Visuals\snaplines.h" />
+    <ClInclude Include="features\trainer\player_modifier.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />
@@ -164,40 +147,21 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="memory\memory.h" />
     <ClInclude Include="memory\offsets.h" />
-    <ClInclude Include="memory\memInterface.h" />
     <ClInclude Include="menu\data\components.h" />
     <ClInclude Include="menu\data\font_awesome.h" />
     <ClInclude Include="menu\data\logo.h" />
+    <ClInclude Include="menu\data\stb_image.h" />
     <ClInclude Include="menu\gui.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="features\Aimbot\aimbot.cpp" />
-    <ClCompile Include="features\Aimbot\norecoil.cpp" />
-    <ClCompile Include="features\Aimbot\triggerbot.cpp" />
-    <ClCompile Include="features\Misc\bhop.cpp" />
-    <ClCompile Include="features\Misc\magnet.cpp" />
-    <ClCompile Include="features\Misc\radar.cpp" />
-    <ClCompile Include="features\Misc\speed.cpp" />
-    <ClCompile Include="features\Misc\teleport.cpp" />
-    <ClCompile Include="features\Trainer\godmode.cpp" />
-    <ClCompile Include="features\Trainer\infAmmo.cpp" />
-    <ClCompile Include="features\Trainer\infArmor.cpp" />
-    <ClCompile Include="features\Trainer\infNades.cpp" />
-    <ClCompile Include="features\Visuals\armor.cpp" />
-    <ClCompile Include="features\Visuals\esp.cpp" />
-    <ClCompile Include="features\Visuals\fullbright.cpp" />
-    <ClCompile Include="features\Visuals\health.cpp" />
-    <ClCompile Include="features\Visuals\name.cpp" />
-    <ClCompile Include="features\Visuals\snaplines.cpp" />
+    <ClCompile Include="features\trainer\player_modifier.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="memory\memory.cpp" />
     <ClCompile Include="menu\data\font_awesome.cpp" />
     <ClCompile Include="menu\gui.cpp" />
   </ItemGroup>

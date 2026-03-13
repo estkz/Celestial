@@ -1,43 +1,31 @@
-/*
-	[+] ---------- Celestial ---------- [+]
-	
-		• Developed by: estetik (loab)
-		 • Build: Alpha
-		 • Date: 14-7-2023
-		• Educational Purposes Only
-
-	[+] ------------------------------- [+]
-*/
-
-
-// Gui Function Includes
 #include "menu/gui.h"
 #include "memory/memory.h"
-
-// Miscellaneous Related Includes
+#include "features/trainer/player_modifier.h"
 #include <thread>
 
-// Main Entrypoint
-int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
-{
-	gui::CreateHWindow("Celestial");
-	gui::CreateDevice();
-	gui::CreateImGui();
+int __stdcall wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev, _In_ PWSTR args, _In_ int show
+) {
+    Memory mem("ac_client.exe");
+    const auto base = mem.GetModuleAddress("ac_client.exe");
 
-	while (gui::isOpened)
-	{
-		gui::BeginRender();
-		gui::Render();
-		gui::EndRender();
+    gui::CreateHWindow("Celestial");
+    gui::CreateDevice();
+    gui::CreateImGui();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
+    while (gui::isOpened) {
+        gui::BeginRender();
+        gui::Render();
+        gui::EndRender();
 
-	gui::DestroyImGui();
-	gui::DestroyDevice();
-	gui::DestroyHWindow();
+        if (base) {
+            PlayerModifiers::run(mem, base);
+        }
 
-	// Once EXIT_SUCCES gets returned it indicates that the cheat has executed successfully and is now terminating (shutting down).
-	return EXIT_SUCCESS;
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+
+    gui::DestroyImGui();
+    gui::DestroyDevice();
+    gui::DestroyHWindow();
+    return 0;
 }
-

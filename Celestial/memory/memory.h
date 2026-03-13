@@ -1,7 +1,6 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN
-
 #include <Windows.h>
 #include <TlHelp32.h>
 
@@ -11,78 +10,75 @@
 class Memory
 {
 private:
-	std::uintptr_t procId = 0;
-	void* processHandle = nullptr;
+    std::uintptr_t procId_ = 0;
+    void* processHandle_ = nullptr;
+
 public:
+    explicit Memory(const std::string_view processName) noexcept
+    {
+        const auto snap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (snap == INVALID_HANDLE_VALUE) return;
 
-	// Memory Constructor - used for finding the processId and opening the handle
-	Memory(const std::string_view processName) noexcept
-	{
-		::PROCESSENTRY32 entry = { };
-		entry.dwSize = sizeof(::PROCESSENTRY32);
+        ::PROCESSENTRY32 entry = { .dwSize = sizeof(::PROCESSENTRY32) };
 
-		const auto procSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (::Process32First(snap, &entry))
+        {
+            do {
+                if (processName == entry.szExeFile)
+                {
+                    procId_ = entry.th32ProcessID;
+                    processHandle_ = ::OpenProcess(PROCESS_ALL_ACCESS, FALSE, procId_);
+                    break;
+                }
+            } while (::Process32Next(snap, &entry));
+        }
 
-		while (::Process32Next(procSnap, &entry))
-		{
-			if (!processName.compare(entry.szExeFile))
-			{
-				procId = entry.th32ProcessID;
-				processHandle = ::OpenProcess(PROCESS_ALL_ACCESS, FALSE, procId);
-				break;
-			}
-		}
+        ::CloseHandle(snap);
+    }
 
-		// Close the handle
-		if (procSnap)
-			::CloseHandle(procSnap);
-	}
+    ~Memory()
+    {
+        if (processHandle_)
+            ::CloseHandle(processHandle_);
+    }
 
-	// Memory Deconstructor - cleanup by closing the process handle to the game's memory.
-	~Memory()
-	{
-		if (processHandle)
-			::CloseHandle(processHandle);
-	}
+    Memory(const Memory&) = delete;
+    Memory& operator=(const Memory&) = delete;
 
-	// Get the Module Base Address
-	const std::uintptr_t GetModuleAddress(const std::string_view moduleName) const noexcept
-	{
-		::MODULEENTRY32 entry = {};
-		entry.dwSize = sizeof(::MODULEENTRY32);
+    [[nodiscard]] std::uintptr_t GetModuleAddress(const std::string_view moduleName) const noexcept
+    {
+        const auto snap = ::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, procId_);
+        if (snap == INVALID_HANDLE_VALUE) return 0;
 
-		const auto procSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, procId);
+        ::MODULEENTRY32 entry = { .dwSize = sizeof(::MODULEENTRY32) };
+        std::uintptr_t address = 0;
 
-		std::uintptr_t moduleBase = 0;
+        if (::Module32First(snap, &entry))
+        {
+            do {
+                if (moduleName == entry.szModule)
+                {
+                    address = reinterpret_cast<std::uintptr_t>(entry.modBaseAddr);
+                    break;
+                }
+            } while (::Module32Next(snap, &entry));
+        }
 
-		while (::Module32Next(procSnap, &entry))
-		{
-			if (!moduleName.compare(entry.szModule))
-			{
-				moduleBase = reinterpret_cast<std::uintptr_t>(entry.modBaseAddr);
-				break;
-			}
-		}
+        ::CloseHandle(snap);
+        return address;
+    }
 
-		if (procSnap)
-			::CloseHandle(procSnap);
+    template <typename T>
+    [[nodiscard]] constexpr T Read(const std::uintptr_t address) const noexcept
+    {
+        T value = { };
+        ::ReadProcessMemory(processHandle_, reinterpret_cast<const void*>(address), &value, sizeof(T), nullptr);
+        return value;
+    }
 
-		return moduleBase;
-	}
-
-	// Read Process Memory
-	template <typename T>
-	constexpr const T Read(const std::uintptr_t& address) const noexcept
-	{
-		T value = { };
-		::ReadProcessMemory(processHandle, reinterpret_cast<const void*>(address), &value, sizeof(T), NULL);
-		return value;
-	}
-
-	// Write Process Memory
-	template <typename T>
-	constexpr void Write(const std::uintptr_t& address, const T& value) const noexcept
-	{
-		::WriteProcessMemory(processHandle, reinterpret_cast<void*>(address), &value, sizeof(T), NULL);
-	}
+    template <typename T>
+    constexpr void Write(const std::uintptr_t address, const T& value) const noexcept
+    {
+        ::WriteProcessMemory(processHandle_, reinterpret_cast<void*>(address), &value, sizeof(T), nullptr);
+    }
 };

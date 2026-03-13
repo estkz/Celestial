@@ -2,45 +2,55 @@
 
 #include <stdint.h>
 
-// What is constexpr?
-// By marking it as constexpr, you're telling the compiler that the value of localPlayer can be computed at compile time, and it can be used in contexts
-// where a compile-time constant is required.
-
-// I've marked the offsets as constexpr, because this is a way of telling the compiler that the values of each offset do NOT change during runtime.
-
 /*
-	Offsets for Assault Cube (32 bits)
+	Offsets for Assault Cube (32 bits) 1.3.0.2
 */
 
-// Lists
-constexpr auto localPlayer = 0x17E0A8;
-constexpr auto dwEntityList = 0x18AC04;
-
-// Player
-constexpr auto m_iHealth = 0xEC;
-constexpr auto m_iName = 0x205;
-constexpr auto m_Armor = 0xF0;
-constexpr auto m_XCoord = 0x28;
-constexpr auto m_YCoord = 0x2C;
-constexpr auto m_ZCoord = 0x30;
-constexpr auto m_ViewangleWidth = 0x34;
-constexpr auto m_ViewAngleHeight = 0x38;
-constexpr auto m_iRecoil = 0x40;
-constexpr auto m_iShotAmount = 0x180;
-
-constexpr auto m_vecOrigin = 0x28;
-constexpr auto vec3_head = 0x4;
-constexpr auto iTeamNum = 0x30C;
-constexpr auto dwViewMatrix = 0x501AE8;
-
-// Weapons
-constexpr auto m_Nades = 0x144;
-
-// Hacks
-constexpr auto rapidFire = 0x164;
+//namespace offsets {
+//	constexpr auto localPlayer = 0x17E0A8;
+//	constexpr auto dwEntityList = 0x18AC04;
+//
+//	constexpr auto health = 0xEC;
+//	constexpr auto name = 0x205;
+//	constexpr auto armor = 0xF0;
+//	constexpr auto postionX = 0x28;
+//	constexpr auto positionY = 0x2C;
+//	constexpr auto positionZ = 0x30;
+//	constexpr auto yaw = 0x34;
+//	constexpr auto pitch = 0x38;
+//	constexpr auto recoil = 0x40;
+//	constexpr auto shotCount = 0x180;
+//
+//	constexpr auto vecOrigin = 0x28;
+//	constexpr auto head = 0x4; // vec3
+//	constexpr auto team = 0x30C;
+//	constexpr auto viewMatrix = 0x501AE8;
+//
+//	constexpr auto nades = 0x144;
+//
+//	constexpr auto rapidFire = 0x164;
+//}
 
 /*
-	Offsets for Assault Cube (64 bits)
+	Offsets for Assault Cube (32 bits) 1.2.0.2
 */
 
-// constexpr auto m_iHealth = 0x8;
+namespace offsets {
+	inline constexpr std::uintptr_t localPlayer = 0x10F4F4; // ptr to Player
+	inline constexpr std::uintptr_t entityList = 0x10F4F8; // ptr to EntityList
+	inline constexpr std::uintptr_t entityEntrySize = 0x4; // distance between entities
+	inline constexpr std::uintptr_t headPos = 0x4; // vec3
+	inline constexpr std::uintptr_t feetPos = 0x34; // vec3
+	inline constexpr std::uintptr_t health = 0xF8; // int
+	inline constexpr std::uintptr_t armor = 0xFC; // int
+	inline constexpr std::uintptr_t yaw = 0x40; // angles (yaw, pitch, roll)
+	inline constexpr std::uintptr_t team = 0x32C; // int (team id)
+	inline constexpr std::uintptr_t renderPos = 0x408; // vec3
+	inline constexpr std::uintptr_t pistolClip = 0x13C; // int
+	inline constexpr std::uintptr_t carbineClip = 0x140; // int
+	inline constexpr std::uintptr_t shotgunClip = 0x144; // int
+	inline constexpr std::uintptr_t mgClip = 0x148; // int
+	inline constexpr std::uintptr_t sniperClip = 0x14C; // int
+	inline constexpr std::uintptr_t arifleClip = 0x150; // int
+	inline constexpr std::uintptr_t grenadeAmmo = 0x158; // int
+}
